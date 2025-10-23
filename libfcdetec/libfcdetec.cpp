@@ -6,11 +6,8 @@
 #include "face_func.h"
 #include "Mosaic.h"
 
-#include <opencv2/opencv.hpp>
+#include "opencv2/opencv.hpp"
 #include <string>
-#include <vector>
-#include <map>
-
 
 
 using json = nlohmann::json;
@@ -50,7 +47,7 @@ void to_json(json& j, const Mat_data& r) {
 }
 
 /*
-* @brief ³õÊ¼»¯£¬±ØĞë£¬²»¿ÉÖØ¸´µ÷ÓÃ
+* @brief åˆå§‹åŒ–ï¼Œå¿…é¡»ï¼Œä¸å¯é‡å¤è°ƒç”¨
 */
 int STDCALL libfcdetec_init(char* auth)
 {
@@ -58,13 +55,13 @@ int STDCALL libfcdetec_init(char* auth)
 }
 
 /*
-* @brief ÊäÈëÍ¼Æ¬£¬·µ»ØÈËÁ³×ø±ê
-* return char* Ä¿±ê×ø±êjson
+* @brief è¾“å…¥å›¾ç‰‡ï¼Œè¿”å›äººè„¸åæ ‡
+* return char* ç›®æ ‡åæ ‡json
 */
 char* STDCALL libfcdetec_fcdection_img(char* file_name)
 {
 	cv::Mat src, dst;
-	src = cv::imread(file_name);  //µ¼ÈëĞèÒªÊ¶±ğµÄÍ¼Ïñ
+	src = cv::imread(file_name);  //å¯¼å…¥éœ€è¦è¯†åˆ«çš„å›¾åƒ
 
 	std::list<CFaceP> oLast = get_face_p_by_cnn(&src);
 	
@@ -77,16 +74,16 @@ char* STDCALL libfcdetec_fcdection_Mat(int rows, int cols, int type, void* data)
 {
 	cv::Mat frame = cv::Mat(rows, cols, CV_8UC3, data);
 
-	//Ã¿10Ö¡½øĞĞÒ»´Î¼ì²â
+	//æ¯10å¸§è¿›è¡Œä¸€æ¬¡æ£€æµ‹
 	if (n_frame_count % 10 == 0)
 	{
-		//Ëõ·Å£¬ÌáÉıĞÔÄÜ	 
+		//ç¼©æ”¾ï¼Œæå‡æ€§èƒ½	 
 		cv::Mat result_cnn;
 		cv::resize(frame, result_cnn, cv::Size(640, 480), 0, 0, cv::INTER_AREA);
 		s_last_face = get_face_p_by_cnn(&result_cnn);
 	}
 
-	//ÈËÁ³ÂíÈü¿Ë
+	//äººè„¸é©¬èµ›å…‹
 	Generate_Mosaic(frame, s_last_face);
 
 	n_frame_count++;

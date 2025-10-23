@@ -12,7 +12,7 @@ extern "C" {
 #define EXPORT_API                  __declspec(dllimport)
 #endif
 
-/* º¯Êı±ê×¼µ÷ÓÃÔ¼¶¨ Standard function calling convention */
+/* å‡½æ•°æ ‡å‡†è°ƒç”¨çº¦å®š Standard function calling convention */
 #ifdef i386
 #ifndef STDCALL
 #define STDCALL                 __attribute__((stdcall))
@@ -31,27 +31,27 @@ extern "C" {
 #endif
 
 /*
-* ËµÃ÷: °æ±¾Îªx64°æ±¾£¬»ùÓÚvs2022£¬Ê¹ÓÃÇ°ĞèÒªÏÈ°²×°ÒÀÀµ¿â VC_redist15-17-19-22.x64.exe
-* ÖĞÎÄ±àÂë¸ñÊ½Îªutf8
+* è¯´æ˜: ç‰ˆæœ¬ä¸ºx64ç‰ˆæœ¬ï¼ŒåŸºäºvs2022ï¼Œä½¿ç”¨å‰éœ€è¦å…ˆå®‰è£…ä¾èµ–åº“ VC_redist15-17-19-22.x64.exe
+* ä¸­æ–‡ç¼–ç æ ¼å¼ä¸ºutf8
 */
 
 #define errcode_success 0
 
 /*
-* @brief ³õÊ¼»¯£¬±ØĞë£¬²»¿ÉÖØ¸´µ÷ÓÃ
+* @brief åˆå§‹åŒ–ï¼Œå¿…é¡»ï¼Œä¸å¯é‡å¤è°ƒç”¨
 */
 EXPORT_API int STDCALL libfcdetec_init(char* auth);
 
 /*
-* @brief ÊäÈëÍ¼Æ¬£¬·µ»ØÈËÁ³×ø±ê
-* data £ºÍ¼Æ¬¶ş½øÖÆĞÅÏ¢ Í¼Ïñ±ØĞëÎªBGRÈıÍ¨µÀµÄÍ¼Ïñ£¬¶ø·ÇrgbÍ¼Ïñ
-* return char* Ä¿±ê×ø±êjson
+* @brief è¾“å…¥å›¾ç‰‡ï¼Œè¿”å›äººè„¸åæ ‡
+* data ï¼šå›¾ç‰‡äºŒè¿›åˆ¶ä¿¡æ¯ å›¾åƒå¿…é¡»ä¸ºBGRä¸‰é€šé“çš„å›¾åƒï¼Œè€Œérgbå›¾åƒ
+* return char* ç›®æ ‡åæ ‡json
 */
 EXPORT_API char* STDCALL libfcdetec_fcdection_img(char* img_name);
 
 /*
-* @brief ·ÖÎöMatĞÅÏ¢
-* return char* Ä¿±ê×ø±êjson
+* @brief åˆ†æMatä¿¡æ¯
+* return char* ç›®æ ‡åæ ‡json
 */
 EXPORT_API char* STDCALL libfcdetec_fcdection_Mat(int rows, int cols, int type, void* data);
 

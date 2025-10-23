@@ -9,9 +9,9 @@ unsigned char* s_p_point_buff = nullptr;  //multiple threads
 
 
 /*
-* µ÷ÊÔÆ÷ÓÅ»¯·½·¨£º
-* c++ÏÂµÄÓÅ»¯Ñ¡µÄ-ËÙ¶È×î´ó»¯/o2 , ´úÂëËÙ¶ÈÓÅÏÈ£¬´úÂëÉú³ÉÏÂ Æô¶¯ÔöÇ¿Ö¸Áî¼¯ Ñ¡AVX2£¬¸¡µãÄ£ĞÍÑ¡ ¿ìËÙ£¬ ÓïÑÔÏÂopenmpÑ¡ÊÇ¡£
-* *Èç¹ûÊ¹ÓÃIntel CPU»òNEON for ARM £¬¿ÉÒÔ¿ªÆô AVX2
+* è°ƒè¯•å™¨ä¼˜åŒ–æ–¹æ³•ï¼š
+* c++ä¸‹çš„ä¼˜åŒ–é€‰çš„-é€Ÿåº¦æœ€å¤§åŒ–/o2 , ä»£ç é€Ÿåº¦ä¼˜å…ˆ; ä»£ç ç”Ÿæˆä¸‹ å¯åŠ¨å¢å¼ºæŒ‡ä»¤é›† é€‰AVX2ï¼Œæµ®ç‚¹æ¨¡å‹é€‰ å¿«é€Ÿï¼Œ è¯­è¨€ä¸‹openmpé€‰æ˜¯ã€‚
+* *å¦‚æœä½¿ç”¨Intel CPUæˆ–NEON for ARM ï¼Œå¯ä»¥å¼€å¯ AVX2
 */
 std::list<CFaceP> 	get_face_p_by_cnn(cv::Mat* pMat) {
 
@@ -21,26 +21,23 @@ std::list<CFaceP> 	get_face_p_by_cnn(cv::Mat* pMat) {
 		s_p_point_buff = new unsigned char[0x20000];
 	}
 
-	int* pResults = nullptr; //ÓÃÀ´¼ì²âÈËÁ³
+	int* pResults = nullptr; //ç”¨æ¥æ£€æµ‹äººè„¸
 	pResults = facedetect_cnn(s_p_point_buff, (unsigned char*)(pMat->ptr(0)), pMat->cols, pMat->rows, pMat->step);
-	//ÀûÓÃfacedetect_cnnº¯ÊıÀ´»ñÈ¡ÈËÁ³£¬ÓÃÓÚ´æ´¢ÈËÁ³¼ì²â½á¹ûµÄ»º³å´æ´¢Æ÷£¡Æä´óĞ¡±ØĞëÎª0x20000×Ö½Ú
-	//facedetect_cnnº¯ÊıÊ¶±ğµÄÍ¼Ïñ±ØĞëÎªBGRÈıÍ¨µÀµÄÍ¼Ïñ£¬¶ø·ÇrgbÍ¼Ïñ
+	//åˆ©ç”¨facedetect_cnnå‡½æ•°æ¥è·å–äººè„¸ï¼Œç”¨äºå­˜å‚¨äººè„¸æ£€æµ‹ç»“æœçš„ç¼“å†²å­˜å‚¨å™¨ï¼å…¶å¤§å°å¿…é¡»ä¸º0x20000å­—èŠ‚
+	//facedetect_cnnå‡½æ•°è¯†åˆ«çš„å›¾åƒå¿…é¡»ä¸ºBGRä¸‰é€šé“çš„å›¾åƒï¼Œè€Œérgbå›¾åƒ
 	std::list<CFaceP> resList;
 	for (int i = 0; i < (pResults ? (*pResults) : 0); i++) {
-		//Èç¹ûpResultÎªNULL,¼´pResultÃ»ÓĞ¼ì²âµ½ÈËÁ³£¬¾Í·µ»Ø0£¬forÑ­»·½áÊø
+		//å¦‚æœpResultä¸ºNULL,å³pResultæ²¡æœ‰æ£€æµ‹åˆ°äººè„¸ï¼Œå°±è¿”å›0ï¼Œforå¾ªç¯ç»“æŸ
 		short* p = ((short*)(pResults + 1)) + (142 * i);
-		//pÖ¸ÕëÓÃÀ´Ö¸Ïò
+		//pæŒ‡é’ˆç”¨æ¥æŒ‡å‘
 		if (p[0] >= s_score) {
 			CFaceP res;
-			res.sScore = p[0];	  //ÏÔÊ¾Á³µÄÖÃĞÅ¶È¡£Æä·¶Î§Îª[0-100]
+			res.sScore = p[0];	  //æ˜¾ç¤ºè„¸çš„ç½®ä¿¡åº¦ã€‚å…¶èŒƒå›´ä¸º[0-100]
 			res.x = (p[1]*10000)/ pMat->cols;
 			res.y = (p[2]*10000)/ pMat->rows;
 			res.w = (p[3]*10000)/ pMat->cols;
 			res.h = (p[4]*10000)/ pMat->rows;
-			//res.x = (p[1] ) ;
-			//res.y = (p[2] );
-			//res.w = (p[3] ) ;
-			//res.h = (p[4] ) ;
+
 			resList.push_back(res);
 		}
 	}

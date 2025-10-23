@@ -7,23 +7,23 @@ bool Generate_Mosaic(cv::Mat& src, std::list<CFaceP>& faces)
 		return false;
 	}
 
-	int step = 10;//²½³¤
+	int step = 10;//æ­¥é•¿
 
 	for(auto it = faces.begin();it!=faces.end();++it)
 	{
-		int x = (it->x*src.cols)/10000; //ÈËÁ³¾ØĞÎ¿òÆğµãx×ø±ê
-		int y = (it->y*src.rows)/10000;//ÈËÁ³¾ØĞÎ¿òÆğµãy×ø±ê
-		int width = (it->w*src.cols)/10000;//ÈËÁ³¾ØĞÎ¿ò¿í
-		int height = (it->h*src.rows)/10000;//ÈËÁ³¾ØĞÎ¿ò¸ß
+		int x = (it->x*src.cols)/10000; //äººè„¸çŸ©å½¢æ¡†èµ·ç‚¹xåæ ‡
+		int y = (it->y*src.rows)/10000;//äººè„¸çŸ©å½¢æ¡†èµ·ç‚¹yåæ ‡
+		int width = (it->w*src.cols)/10000;//äººè„¸çŸ©å½¢æ¡†å®½
+		int height = (it->h*src.rows)/10000;//äººè„¸çŸ©å½¢æ¡†é«˜
 
-		//·¶Î§À©´ó¿í¸ßµÄ 10%
+		//èŒƒå›´æ‰©å¤§å®½é«˜çš„ 10%
 
 		x = x - width * 0.1;
 		y = y - height * 0.1;
 		width = width * 1.2;
 		height = height * 1.2;
 
-		// Ô½½ç±£»¤
+		// è¶Šç•Œä¿æŠ¤
 		if (x + width + step > src.cols) {
 			width = src.cols - x - step;
 		}
@@ -31,22 +31,22 @@ bool Generate_Mosaic(cv::Mat& src, std::list<CFaceP>& faces)
 			height = src.rows - y - step;
 		}
 
-		//int x = (it->x ); //ÈËÁ³¾ØĞÎ¿òÆğµãx×ø±ê
-		//int y = (it->y  );//ÈËÁ³¾ØĞÎ¿òÆğµãy×ø±ê
-		//int width = (it->w) ;//ÈËÁ³¾ØĞÎ¿ò¿í
-		//int height = (it->h ) ;//ÈËÁ³¾ØĞÎ¿ò¸ß
+		//int x = (it->x ); //äººè„¸çŸ©å½¢æ¡†èµ·ç‚¹xåæ ‡
+		//int y = (it->y  );//äººè„¸çŸ©å½¢æ¡†èµ·ç‚¹yåæ ‡
+		//int width = (it->w) ;//äººè„¸çŸ©å½¢æ¡†å®½
+		//int height = (it->h ) ;//äººè„¸çŸ©å½¢æ¡†é«˜
 
-		//½ö¶ÔÈËÁ³ÇøÓò½øĞĞÏñËØĞŞ¸Ä¡£±éÀúÈËÁ³¾ØĞÎ¿òÇøÓòÏñËØ£¬²¢¶ÔÆä½øĞĞĞŞ¸Ä
+		//ä»…å¯¹äººè„¸åŒºåŸŸè¿›è¡Œåƒç´ ä¿®æ”¹ã€‚éå†äººè„¸çŸ©å½¢æ¡†åŒºåŸŸåƒç´ ï¼Œå¹¶å¯¹å…¶è¿›è¡Œä¿®æ”¹
 		for (int i = y; i < (y + height); i += step)
 		{
 			for (int j = x; j < (x + width); j += step)
 			{
-				//½«ÈËÁ³¾ØĞÎ¿òÔÙÏ¸·ÖÎªÈô¸É¸öĞ¡·½¿é£¬ÒÀ´Î¶ÔÃ¿¸ö·½¿éĞŞ¸ÄÏñËØ£¨ÏàÍ¬·½¿é¸³ÓèÏàÍ¬»Ò¶ÈÖµ£©
+				//å°†äººè„¸çŸ©å½¢æ¡†å†ç»†åˆ†ä¸ºè‹¥å¹²ä¸ªå°æ–¹å—ï¼Œä¾æ¬¡å¯¹æ¯ä¸ªæ–¹å—ä¿®æ”¹åƒç´ ï¼ˆç›¸åŒæ–¹å—èµ‹äºˆç›¸åŒç°åº¦å€¼ï¼‰
 				for (int k = i; k < (step + i); k++)
 				{
 					for (int m = j; m < (step + j); m++)
 					{
-						//¶Ô¾ØĞÎÇøÓòÏñËØÖµ½øĞĞĞŞ¸Ä£¬rgbÈıÍ¨µÀ
+						//å¯¹çŸ©å½¢åŒºåŸŸåƒç´ å€¼è¿›è¡Œä¿®æ”¹ï¼Œrgbä¸‰é€šé“
 						for (int c = 0; c < 3; c++)
 						{
 							src.at<cv::Vec3b>(k, m)[c] = src.at<cv::Vec3b>(i, j)[c];
