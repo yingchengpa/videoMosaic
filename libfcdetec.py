@@ -22,11 +22,6 @@
 ### 中文格式请注意： dll 和 py 之间通过json参数传递时，中文采用utf8格式 ；
 ###               dll 和 py 之间通过c_char_p直接传递时，中文采用gbk格式
 
-
-
-# 设置dll的加载路径
-import sys
-
 from ctypes import *
 import json
 import datetime as dt

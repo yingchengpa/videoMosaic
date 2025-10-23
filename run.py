@@ -110,6 +110,7 @@ class MY_GUI():
         p = pathlib.Path(self.m_video_file.get())
         out_put = f'{self.m_out_dir.get()}\{p.stem}_new{p.suffix}'
         fs.video_fs(out_put,self.video_callback)
+        self.log_label['text'] = 'videoMosaic success'
 
     def video_callback(self,current_frame,total_frame):
         self.progressbar['value'] = current_frame

@@ -67,9 +67,10 @@ class video_fs:
         
         f_video_writer.close()
         
-        print('--start merge video&&audio--')
         # 3、音视频合并
         ff_tool.ff_merge(audio_name,self.m_video,output_video)
+
+        print('--end videoMosaic--')
     
 
 if __name__ == "__main__":
